@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<!--TODO: Add styling -->
+<header th:replace="fragments :: header"></header>
+
+<form method="post">
+    <div>
+        <label>Name
+            <input th:field="${genre.name}">
+        </label>
+        <span th:errors="${genre.name}" class="error"></span>
+    </div>
+    <input type="submit" value="Create Genre" >
+</form>
+</body>
+</html>

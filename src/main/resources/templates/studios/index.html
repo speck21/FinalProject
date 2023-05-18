@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<!-- TODO: Studio page naming -->
+<!-- TODO: Studio page styling -->
+<!-- TODO: Add hyperlinks -->
+
+<header th:replace="fragments :: header"></header>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Studios</th>
+    </tr>
+    </thead>
+    <tr th:each="studio:${studios}">
+        <td th:text="${studio.name}"></td>
+        <td th:text="${studio.yearEstablished}"></td>
+    </tr>
+
+</table>
+</body>
+</html>

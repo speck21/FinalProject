@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<!--TODO: Genre page naming -->
+<!--TODO: Genre page styling -->
+<!--TODO: Add hyperlinks -->
+
+<header th:replace="fragments :: header"></header>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Genres</th>
+    </tr>
+    </thead>
+    <tr th:each="genre:${genres}">
+        <td th:text="${genre.name}"></td>
+    </tr>
+
+</table>
+</body>
+</html>
