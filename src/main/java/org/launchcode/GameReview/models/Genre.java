@@ -13,8 +13,8 @@ public class Genre extends AbstractEntity{
     @NotBlank
     private String name;
 
-//    @ManyToMany(mappedBy = "genreList")
-//    private final List<Title> titleList = new ArrayList<>();
+    @ManyToMany(mappedBy = "genreList")
+    private final List<GameTitle> titleList = new ArrayList<>();
 
     public Genre(String name) {
         this.name = name;

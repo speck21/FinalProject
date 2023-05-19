@@ -1,7 +1,10 @@
 package org.launchcode.GameReview.models;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Studio extends AbstractEntity{
@@ -13,9 +16,13 @@ public class Studio extends AbstractEntity{
     @NotNull
     @Min(1950)
     @Max(2024)
-    private int yearEstablished;
+    private Integer yearEstablished;
 
-    public Studio(String name, int yearEstablished) {
+    @OneToMany(mappedBy = "studio")
+    List<GameTitle> gameTitleList = new ArrayList<>();
+
+
+    public Studio(String name, Integer yearEstablished) {
         this.name = name;
         this.yearEstablished = yearEstablished;
     }
@@ -30,12 +37,11 @@ public class Studio extends AbstractEntity{
         this.name = name;
     }
 
-    public int getYearEstablished() {
+    public Integer getYearEstablished() {
         return yearEstablished;
     }
 
-    public void setYearEstablished(int yearEstablished) {this.yearEstablished = yearEstablished;}
-
+    public void setYearEstablished(Integer yearEstablished) {this.yearEstablished = yearEstablished;}
 
 
 }

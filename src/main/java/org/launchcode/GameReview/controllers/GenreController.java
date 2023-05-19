@@ -19,6 +19,8 @@ public class GenreController {
     @Autowired
     private GenreRepository genreRepository;
 
+
+
     @GetMapping
     public String displayAllGenres(Model model){
         model.addAttribute("title", "Genre List");

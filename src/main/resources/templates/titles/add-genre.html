@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<!-- TODO: gametitle page naming -->
+<!-- TODO: gametitle page styling -->
+<!-- TODO: Add hyperlinks -->
+
+<header th:replace="fragments :: header"></header>
+
+<form method="post">
+  <div class="form-group">
+    <input type="hidden" th:field="${gameTitleGenreDTO.gameTitle}">
+    <select th:field="${gameTitleGenreDTO.genre}">
+      <option th:each="genre : ${genres}"
+              th:value="${genre.id}"
+              th:text="${genre.name}"
+      ></option>
+    </select>
+  </div>
+  <input type="submit" class="btn btn-success" value="Add Genre">
+</form>
+</body>
+</html>

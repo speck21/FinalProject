@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<!-- TODO: gametitle page naming -->
+<!-- TODO: gametitle page styling -->
+<!-- TODO: Add hyperlinks -->
+
+<header th:replace="fragments :: header"></header>
+
+<form method="post">
+    <div class="form-group">
+        <label>Name
+            <input th:field="${gameTitle.name}">
+        </label>
+        <span th:errors="${gameTitle.name}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label>Studio Name
+            <select th:field="${gameTitle.studio}">
+                <option th:each="studio:${studios}"
+                        th:value="${studio.id}"
+                        th:text="${studio.name}"
+                ></option>
+            </select>
+
+        </label>
+    </div>
+    <div class="form-group">
+        <label>Description
+            <input th:field="${gameTitle.gameDescription.description}">
+        </label>
+    </div>
+    <div class="form-group">
+        <!--TODO:style button -->
+        <input type="submit" value="Create">
+    </div>
+
+</form>
+
+</body>
+</html>
