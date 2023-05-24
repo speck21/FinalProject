@@ -17,7 +17,7 @@
   </tr>
   </thead>
   <tr th:each="game:${gameTitles}">
-    <td th:text="${game.name}"></td>
+    <td><a th:href="'titles/detail?gameTitleId=' + ${game.id}" th:text="${game.name}"></a></td>
     <td th:text="${game.studio.name}"></td>
     <td th:text="${game.genreList}"></td>
     <!--add links^^^^ -->

@@ -101,6 +101,22 @@ public class GameTitleController {
         return "redirect:add-genre";
     }
 
+    @GetMapping("delete")
+    public String deleteTitleForm(Model model){
+        model.addAttribute("title", "Delete Titles");
+        model.addAttribute("titles", gameTitleRepository.findAll());
+        return "titles/delete";
+    }
+
+    @PostMapping("delete")
+    public String processDeleteTitleForm(@RequestParam(required = false) int[] titleIds){
+        if(titleIds != null){
+            for(int id:titleIds){
+                gameTitleRepository.deleteById(id);
+            }
+        }
+        return "redirect:";
+    }
 
 }
 

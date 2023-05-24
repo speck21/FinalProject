@@ -1,6 +1,7 @@
 package org.launchcode.GameReview.models;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ public class GameTitle extends AbstractEntity{
 
     @NotNull
     @ManyToOne
+    @Valid
     private Studio studio;
 
     @NotNull
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     private GameDescription gameDescription;
 
