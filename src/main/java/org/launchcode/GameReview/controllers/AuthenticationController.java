@@ -2,6 +2,7 @@ package org.launchcode.GameReview.controllers;
 
 import org.launchcode.GameReview.data.UserRepository;
 import org.launchcode.GameReview.models.User;
+import org.launchcode.GameReview.models.dto.LoginFormDTO;
 import org.launchcode.GameReview.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,44 @@ public class AuthenticationController {
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
         return "redirect:";
+    }
+
+    @GetMapping("login")
+    public String displayLoginForm(Model model){
+        model.addAttribute("title", "Login");
+        model.addAttribute(new LoginFormDTO());
+        return "login";
+    }
+
+    @PostMapping("login")
+    public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO, Errors errors, Model model, HttpServletRequest request){
+        if(errors.hasErrors()){
+            model.addAttribute("title", "Login");
+            return "login";
+        }
+        User loginUser = userRepository.findByUsername(loginFormDTO.getUsername());
+
+        if(loginUser==null){
+            errors.rejectValue("username", "username.dne", "Username does not exist.");
+            model.addAttribute("title", "Login");
+            return "login";
+        }
+        String password = loginFormDTO.getPassword();
+
+        if(!loginUser.isMatchingPassword(password)){
+            errors.rejectValue("password", "password.invalid", "Invalid Password");
+            model.addAttribute("title", "Login");
+            return "login";
+        }
+
+        setUserInSession(request.getSession(), loginUser);
+        return "redirect:/titles";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "redirect:/login";
     }
 
 

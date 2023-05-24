@@ -7,19 +7,19 @@
 
 <form method="post">
   <div>
-    <label>
+    <label>Username
       <input th:field="${registerFormDTO.username}">
     </label>
     <span th:errors="${registerFormDTO.username}"></span>
   </div>
   <div>
-    <label>
+    <label>Password
       <input th:field="${registerFormDTO.password}" type="password">
     </label>
     <span th:errors="${registerFormDTO.password}"></span>
   </div>
   <div>
-    <label>
+    <label>Verify Password
       <input th:field="${registerFormDTO.verifyPassword}" type="password">
     </label>
     <span th:errors="${registerFormDTO.verifyPassword}"></span>
