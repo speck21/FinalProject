@@ -17,14 +17,19 @@
   </tr>
   </thead>
   <tr th:each="game:${gameTitles}">
-    <td><a th:href="'titles/detail?gameTitleId=' + ${game.id}" th:text="${game.name}"></a></td>
-    <td th:text="${game.studio.name}"></td>
-    <td th:text="${game.genreList}"></td>
+    <td style="vertical-align:middle"><a th:href="'/titles/detail?gameTitleId=' + ${game.id}" th:text="${game.name}"></a></td>
+    <td style="vertical-align:middle"><a th:href="'../studios/detail?studioId=' + ${game.studio.id}" th:text="${game.studio.name}"></a></td>
+    <td style="vertical-align:middle">
+      <p th:each="genre:${game.genreList}"><a th:href="'/genres/detail?genreId=' + ${genre.id}" th:text="${genre.name}"></a></p>
+    </td>
+
+<!--    <td th:text="${game.genreList}"></td>-->
     <!--add links^^^^ -->
   </tr>
 </table>
-<form>
+<form class="buttons">
   <input type="submit" formaction="/titles/create" value="Add Title">
+  <input type="submit" formaction="/titles/delete" value="Delete Title">
 </form>
 
 </body>

@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("studios")
@@ -28,14 +26,14 @@ public class StudioController {
         return "studios/index";
     }
     @GetMapping("create")
-    private String renderCreateStudioForm(Model model){
+    public String renderCreateStudioForm(Model model){
         model.addAttribute("title", "Add Studio");
         model.addAttribute(new Studio());
         return "studios/create";
     }
 
     @PostMapping("create")
-    private String processCreateStudioForm(@Valid @ModelAttribute Studio studio, Errors errors, Model model){
+    public String processCreateStudioForm(@Valid @ModelAttribute Studio studio, Errors errors, Model model){
         if(errors.hasErrors()){
             model.addAttribute("title", "Add Studio");
             model.addAttribute(new Studio());
@@ -43,5 +41,19 @@ public class StudioController {
         }
         studioRepository.save(studio);
         return "redirect:";
+    }
+
+    @GetMapping("detail")
+    public String displayStudioDetails(@RequestParam Integer studioId, Model model){
+        Optional<Studio> result = studioRepository.findById(studioId);
+
+        if(result.isEmpty()){
+            model.addAttribute("title", "Invalid Studio ID: " + studioId);
+        }else{
+            Studio studio = result.get();
+            model.addAttribute("title", studio.getName() + " - Info");
+            model.addAttribute("studio", studio);
+        }
+        return "studios/detail";
     }
 }

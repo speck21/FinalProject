@@ -43,5 +43,7 @@ public class Studio extends AbstractEntity{
 
     public void setYearEstablished(Integer yearEstablished) {this.yearEstablished = yearEstablished;}
 
-
+    public List<GameTitle> getGameTitleList() {
+        return gameTitleList;
+    }
 }

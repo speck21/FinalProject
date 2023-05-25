@@ -16,8 +16,8 @@
     </tr>
     </thead>
     <tr th:each="studio:${studios}">
-        <td th:text="${studio.name}"></td>
-        <td th:text="${studio.yearEstablished}"></td>
+        <td style="vertical-align:middle"><a th:href="'/studios/detail?studioId='+${studio.id}" th:text="${studio.name}"></a></td>
+        <td style="vertical-align:middle" th:text="${studio.yearEstablished}"></td>
     </tr>
 
 </table>

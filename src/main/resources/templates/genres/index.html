@@ -15,7 +15,8 @@
     </tr>
     </thead>
     <tr th:each="genre:${genres}">
-        <td th:text="${genre.name}"></td>
+        <td><a th:href="'/genres/detail?genreId=' + ${genre.id}" th:text="${genre.name}"></a></td>
+
     </tr>
 
 </table>

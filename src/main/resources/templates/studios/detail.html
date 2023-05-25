@@ -12,26 +12,25 @@
 <table class="table table-striped">
   <tr>
     <th>ID</th>
-    <td th:text="${gameTitle.id}"></td>
+    <td th:text="${studio.id}"></td>
   </tr>
   <tr>
-    <th>Description</th>
-    <td th:text="${gameTitle.gameDescription.description}"></td>
+    <th>Name</th>
+    <td th:text="${studio.name}"></td>
   </tr>
   <tr>
     <th>Studio</th>
-    <td><a th:href="'../studios/detail?studioId=' + ${gameTitle.studio.id}" th:text="${gameTitle.studio.name}"></a></td>
+    <td th:text="${studio.yearEstablished}"></td>
   </tr>
   <tr>
-    <th>Genres</th>
+    <th>List of Titles</th>
     <td>
       <ul>
-      <li th:each="genre : ${genres}"><a th:href="'/genres/detail?genreId='+${genre.id}" th:text="${genre.name}"></a></li>
+      <li th:each="game : ${studio.gameTitleList}"><a th:href="'/titles/detail?gameTitleId='+${game.id}" th:text="${game.name}"></a></li>
       </ul>
     </td>
   </tr>
 </table>
-<a th:href="'/titles/add-genre?gameTitleId=' + ${gameTitle.id}">Add Genre</a>
 
 </body>
 </html>

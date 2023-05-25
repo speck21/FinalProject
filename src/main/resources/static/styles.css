@@ -4,3 +4,7 @@ body {
 .error {
   color: red;
 }
+
+.buttons{
+display: inline;
+}

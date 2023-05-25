@@ -30,6 +30,10 @@ public class Genre extends AbstractEntity{
         this.name = name;
     }
 
+    public List<GameTitle> getTitleList() {
+        return titleList;
+    }
+
     @Override
     public String toString() {
         return  name;

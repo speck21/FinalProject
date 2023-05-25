@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<form th:action="@{/search/results}" method="post">
+  <h2>Search For:</h2>
+  <p>
+    <label for="searchTerm">Search Term:</label>
+      <input type="text" id="searchTerm" name="searchTerm">
+  </p>
+  <input type="submit" value="Search">
+</form>
+
+<table class="table table-striped">
+  <tr th:each="game:${gameTitles}">
+    <td>
+      <p>Title: <a th:href="'../titles/detail?gameTitleId=' + ${game.id}" th:text="${game.name}"></a></p>
+      <p th:text="${'Description: ' + game.gameDescription.description}"></p>
+      <p>Studio: <a th:href="'../studios/detail?studioId=' + ${game.studio.id}" th:text="${game.studio.name}"></a></p>
+      <p>Genres: </p>
+      <ul>
+        <li th:each="genre:${game.genreList}"><a th:href="'/genres/detail?genreId=' + ${genre.id}" th:text="${genre.name}"></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

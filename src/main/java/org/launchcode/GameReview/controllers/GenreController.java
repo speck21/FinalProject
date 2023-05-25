@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("genres")
@@ -46,4 +44,19 @@ public class GenreController {
         genreRepository.save(genre);
         return "redirect:";
     }
+
+    @GetMapping("detail")
+    public String displayGenreDetails(@RequestParam Integer genreId, Model model){
+        Optional<Genre> result = genreRepository.findById(genreId);
+
+        if(result.isEmpty()){
+            model.addAttribute("title", "Invalid Genre ID: " + genreId);
+        }else{
+            Genre genre = result.get();
+            model.addAttribute("title", genre.getName() + " - Info");
+            model.addAttribute("genre", genre);
+        }
+        return "genres/detail";
+    }
+
 }
