@@ -1,7 +1,6 @@
 package org.launchcode.GameReview.models;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 public class GameDescription extends AbstractEntity{

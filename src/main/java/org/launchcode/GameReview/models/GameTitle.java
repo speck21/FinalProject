@@ -55,6 +55,8 @@ public class GameTitle extends AbstractEntity{
         return genreList;
     }
 
+    public void setGenreList(Genre genre){this.genreList.add(genre);}
+
     public void addGenre(Genre genre) {
         this.genreList.add(genre);
     }

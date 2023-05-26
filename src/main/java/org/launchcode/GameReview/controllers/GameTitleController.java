@@ -13,6 +13,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -37,15 +39,18 @@ public class GameTitleController {
 
     @GetMapping("create")
     public String renderGameTitleForm(Model model){
+        List<Genre> addGenre = new ArrayList<>();
+
         model.addAttribute("title", "Game Title");
         model.addAttribute("gameTitle", new GameTitle());
         model.addAttribute("studios", studioRepository.findAll());
         model.addAttribute("genres", genreRepository.findAll());
+        model.addAttribute("addGenre", addGenre);
         return "titles/create";
     }
 
     @PostMapping("create")
-    public String processGameTitleForm(@Valid @ModelAttribute GameTitle gameTitle, Errors errors, Model model){
+    public String processGameTitleForm(@Valid @ModelAttribute GameTitle gameTitle, Errors errors, @RequestParam("addGenre") List<Genre> addGenre, Model model){
         if(errors.hasErrors()){
             model.addAttribute("title", "Game Titles");
             model.addAttribute("gameTitle", new GameTitle());
@@ -53,7 +58,9 @@ public class GameTitleController {
             model.addAttribute("genres", genreRepository.findAll());
             return "titles/create";
         }
-
+        for(Genre genre:addGenre) {
+            gameTitle.setGenreList(genre);
+        }
         gameTitleRepository.save(gameTitle);
         return "redirect:";
     }
