@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+
+<header th:replace="fragments :: header"></header>
+
+<form method="post">
+    <th:block th:each="studio:${studios}">
+        <div>
+            <span th:text="${studio.name}"></span>
+            <input type="checkbox" name="studioIds" th:value="${studio.id}">
+        </div>
+    </th:block>
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

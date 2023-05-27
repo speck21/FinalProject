@@ -5,7 +5,9 @@ import org.launchcode.GameReview.data.GenreRepository;
 import org.launchcode.GameReview.data.StudioRepository;
 import org.launchcode.GameReview.models.GameTitle;
 import org.launchcode.GameReview.models.Genre;
+import org.launchcode.GameReview.models.Video;
 import org.launchcode.GameReview.models.dto.GameTitleGenreDTO;
+import org.launchcode.GameReview.models.dto.GameTitleVideoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +52,7 @@ public class GameTitleController {
     }
 
     @PostMapping("create")
-    public String processGameTitleForm(@Valid @ModelAttribute GameTitle gameTitle, Errors errors, @RequestParam("addGenre") List<Genre> addGenre, Model model){
+    public String processGameTitleForm(@Valid @ModelAttribute GameTitle gameTitle, Errors errors, @RequestParam(value="addGenre", required = false) List<Genre> addGenre, Model model){
         if(errors.hasErrors()){
             model.addAttribute("title", "Game Titles");
             model.addAttribute("gameTitle", new GameTitle());
@@ -58,8 +60,10 @@ public class GameTitleController {
             model.addAttribute("genres", genreRepository.findAll());
             return "titles/create";
         }
-        for(Genre genre:addGenre) {
-            gameTitle.setGenreList(genre);
+        if(addGenre != null && !addGenre.isEmpty()) {
+            for (Genre genre : addGenre) {
+                gameTitle.setGenreList(genre);
+            }
         }
         gameTitleRepository.save(gameTitle);
         return "redirect:";
@@ -69,6 +73,7 @@ public class GameTitleController {
     @GetMapping("detail")
     public String displayGameTitleDetails(@RequestParam Integer gameTitleId, Model model){
         Optional<GameTitle> result = gameTitleRepository.findById(gameTitleId);
+
 
         if(result.isEmpty()){
             model.addAttribute("title", "Invalid Game ID: " + gameTitleId);
@@ -86,16 +91,20 @@ public class GameTitleController {
     public String renderAddGenreForm(@RequestParam Integer gameTitleId, Model model){
         Optional<GameTitle> result = gameTitleRepository.findById(gameTitleId);
         GameTitle gameTitle = result.get();
-        model.addAttribute("title", "Add Genre to: " + gameTitle.getName());
-        model.addAttribute("genres", genreRepository.findAll());
-        GameTitleGenreDTO gameTitleGenreDTO = new GameTitleGenreDTO();
-        gameTitleGenreDTO.setGameTitle(gameTitle);
-        model.addAttribute("gameTitleGenreDTO", gameTitleGenreDTO);
+        if(result.isEmpty()){
+            model.addAttribute("title", "Invalid Game ID: " + gameTitleId);
+        }else {
+            model.addAttribute("title", "Add Genre to: " + gameTitle.getName());
+            model.addAttribute("genres", genreRepository.findAll());
+            GameTitleGenreDTO gameTitleGenreDTO = new GameTitleGenreDTO();
+            gameTitleGenreDTO.setGameTitle(gameTitle);
+            model.addAttribute("gameTitleGenreDTO", gameTitleGenreDTO);
+        }
         return "titles/add-genre";
     }
 
     @PostMapping("add-genre")
-    public String processAddGenreForm(@ModelAttribute @Valid GameTitleGenreDTO gameTitleGenreDTO, Errors errors, Model model){
+    public String processAddGenreForm(@ModelAttribute @Valid GameTitleGenreDTO gameTitleGenreDTO, Errors errors){
         if(!errors.hasErrors()){
             GameTitle gameTitle = gameTitleGenreDTO.getGameTitle();
             Genre genre = gameTitleGenreDTO.getGenre();
@@ -108,6 +117,36 @@ public class GameTitleController {
         return "redirect:add-genre";
     }
 
+    @GetMapping("add-video")
+    public String displayAddVideoForm(@RequestParam Integer gameTitleId, Model model){
+        Optional<GameTitle> result = gameTitleRepository.findById(gameTitleId);
+        GameTitle gameTitle = result.get();
+        if(!result.isPresent()){
+            model.addAttribute("title", "Invalid Game ID: " + gameTitleId);
+            return "/titles/error";
+        }
+        GameTitleVideoDTO gameTitleVideoDTO =  new GameTitleVideoDTO();
+        gameTitleVideoDTO.setGameTitle(gameTitle);
+        Video video = new Video();
+        gameTitleVideoDTO.setVideo(video);
+        model.addAttribute("title", "Add Video to: " + gameTitle.getName());
+        model.addAttribute("gameTitleVideoDTO", gameTitleVideoDTO);
+
+        return "titles/add-video";
+    }
+
+    @PostMapping("add-video")
+    public String processAddVideoForm(@Valid @ModelAttribute GameTitleVideoDTO gameTitleVideoDTO, Errors errors, Model model){
+        if(!errors.hasErrors()){
+            GameTitle gameTitle = gameTitleVideoDTO.getGameTitle();
+            Video video = gameTitleVideoDTO.getVideo();
+            gameTitle.setVideo(video);
+            gameTitleRepository.save(gameTitle);
+            return "redirect:detail?gameTitleId=" + gameTitle.getId();
+        }
+        return "/titles/error";
+    }
+
     @GetMapping("delete")
     public String deleteTitleForm(Model model){
         model.addAttribute("title", "Delete Titles");
@@ -118,6 +157,7 @@ public class GameTitleController {
     @PostMapping("delete")
     public String processDeleteTitleForm(@RequestParam(required = false) int[] titleIds){
         if(titleIds != null){
+
             for(int id:titleIds){
                 gameTitleRepository.deleteById(id);
             }
@@ -128,4 +168,3 @@ public class GameTitleController {
 }
 
 
-//add game description to a details page accessible by clicking on the specific game title on the main page

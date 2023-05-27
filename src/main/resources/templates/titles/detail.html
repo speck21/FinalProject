@@ -30,8 +30,14 @@
       </ul>
     </td>
   </tr>
+  <tr>
+    <th>Video</th>
+    <td>
+      <div th:utext="${gameTitle.video.embedVideoUrl}"></div>
+    </td>
+  </tr>
 </table>
-<a th:href="'/titles/add-genre?gameTitleId=' + ${gameTitle.id}">Add Genre</a>
-
+<p><a th:href="'/titles/add-genre?gameTitleId=' + ${gameTitle.id}">Add Genre</a></p>
+<p><a th:href="'/titles/add-video?gameTitleId=' + ${gameTitle.id}">Add Video</a></p>
 </body>
 </html>

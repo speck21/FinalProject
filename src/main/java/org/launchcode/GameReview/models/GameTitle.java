@@ -28,6 +28,10 @@ public class GameTitle extends AbstractEntity{
     @ManyToMany
     private final List<Genre> genreList = new ArrayList<>();
 
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    private Video video;
+
     public GameTitle(String name, Studio studio) {
         this.name = name;
         this.studio = studio;
@@ -69,4 +73,11 @@ public class GameTitle extends AbstractEntity{
         this.gameDescription = gameDescription;
     }
 
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
 }

@@ -56,4 +56,32 @@ public class StudioController {
         }
         return "studios/detail";
     }
+
+    @GetMapping("delete")
+    public String deleteStudioForm(Model model){
+        model.addAttribute("title", "Delete Studio");
+        model.addAttribute("studios", studioRepository.findAll());
+        return "studios/delete";
+    }
+
+    @PostMapping("delete")
+    public String processDeleteStudioForm(@RequestParam(required = false) int[] studioIds, Model model){
+        if(studioIds != null){
+            for(int id:studioIds){
+                Optional<Studio> result = studioRepository.findById(id);
+                Studio studio = result.get();
+                if(studio.getGameTitleList().isEmpty()){
+                    studioRepository.deleteById(id);
+                }else{
+                    model.addAttribute("title", "Error Removing Studio");
+                    model.addAttribute("errorMessage", "Cannot remove a Studio that still has game titles associated with it. Remove the game, or update the title, before deleting the defunct studio.");
+                    return "/titles/error";
+                }
+            }
+        }
+        return "redirect:";
+    }
 }
+
+
+

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<!-- TODO: gametitle page naming -->
+<!-- TODO: gametitle page styling -->
+<!-- TODO: Add hyperlinks -->
+
+<header th:replace="fragments :: header"></header>
+
+<form method="post">
+  <div class="form-group">
+      <input type="hidden" th:field="${gameTitleVideoDTO.gameTitle}">
+      <label>Embed Video Link
+          <input th:field="${gameTitleVideoDTO.video.embedVideoUrl}">
+      </label>
+  </div>
+    <input type="submit" class="btn btn-success" value="Add Video">
+</form>
+
+</body>
+</html>
