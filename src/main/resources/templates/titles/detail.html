@@ -29,6 +29,15 @@
       <li th:each="genre : ${genres}"><a th:href="'/genres/detail?genreId='+${genre.id}" th:text="${genre.name}"></a></li>
       </ul>
     </td>
+<!--    Button to delete the genre
+        Need buttons on this page to remove the studio and genre from this title-->
+    <td>
+      <ul>
+        <form class="buttons">
+          <input type="submit" formaction=""
+        </form>
+      </ul>
+    </td>
   </tr>
 </table>
 <a th:href="'/titles/add-genre?gameTitleId=' + ${gameTitle.id}">Add Genre</a>

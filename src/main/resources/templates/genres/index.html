@@ -16,6 +16,9 @@
     </thead>
     <tr th:each="genre:${genres}">
         <td><a th:href="'/genres/detail?genreId=' + ${genre.id}" th:text="${genre.name}"></a></td>
+<!--        add action to button, add script to reload page and using ajax call a controller
+            to delete the genre from all gametitles, then to delete the genre itself.-->
+        <td><button >Delete From All Titles</button></td>
 
     </tr>
 

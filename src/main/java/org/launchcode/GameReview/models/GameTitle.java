@@ -51,12 +51,26 @@ public class GameTitle extends AbstractEntity{
         this.studio = studio;
     }
 
+    //delete studio
+    public void deleteStudio(){this.studio = null; }
+
     public List<Genre> getGenreList() {
         return genreList;
     }
 
     public void addGenre(Genre genre) {
         this.genreList.add(genre);
+    }
+
+    //delete genre
+    //need to update the form/page to be able to select a specific genre to remove
+    public void deleteGenre(Genre genreRemove){
+        //iterate through the genreList and remove specified genres
+        for(Genre genre : genreList ){
+            if(genre == genreRemove){
+                genre = null;
+            }
+        }
     }
 
     public GameDescription getGameDescription() {
