@@ -1,6 +1,8 @@
 package org.launchcode.GameReview.controllers;
 
+import org.launchcode.GameReview.data.GameTitleRepository;
 import org.launchcode.GameReview.data.StudioRepository;
+import org.launchcode.GameReview.models.GameTitle;
 import org.launchcode.GameReview.models.Studio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,15 +11,17 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Iterator;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("studios")
 public class StudioController {
 
-    //TODO: remove create links from nav bar add button to bottom of list page
     @Autowired
     private StudioRepository studioRepository;
+    @Autowired
+    private GameTitleRepository gameTitleRepository;
 
     @GetMapping
     public String displayAllStudios(Model model){
@@ -55,5 +59,21 @@ public class StudioController {
             model.addAttribute("studio", studio);
         }
         return "studios/detail";
+    }
+
+    @PostMapping("delete-studio")
+    public String deleteStudio(@RequestParam Integer studioId){
+        //i dont think model is needed cause we'll redirect to index upon deletion, if the JS doesn't just
+        //reload the page
+
+        //search through all gametitles and null the studio, then delete the studio
+        Iterable<GameTitle> games = gameTitleRepository.findAll();
+        for(GameTitle game: games){
+            if(game.getStudio().getId() == studioId){
+                game.setStudio(studioRepository.findByName("unlisted").get());
+            }
+        }
+        studioRepository.deleteById(studioId);
+        return "studios/index";
     }
 }

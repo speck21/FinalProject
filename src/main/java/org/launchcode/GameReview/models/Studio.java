@@ -14,7 +14,7 @@ public class Studio extends AbstractEntity{
     private String name;
 
     @NotNull
-    @Min(value = 1950, message = "The studio predates computers?")
+    @Min(value = 1900, message = "The studio predates computers?")
     @Max(value = 2024, message = "Year hasn't come to pass yet...")
     private Integer yearEstablished;
 
